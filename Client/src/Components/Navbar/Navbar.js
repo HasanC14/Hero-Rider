@@ -13,6 +13,18 @@ const Navbar = () => {
       <li>
         <Link to={"/About"}>About</Link>
       </li>
+      <li>
+        <Link to={"/Login"}>Login</Link>
+      </li>
+      <li>
+        <Link to={"/RiderReg"}>Join as Rider</Link>
+      </li>
+      <li>
+        <Link to={"/LearnerReg"}>Join as Learner</Link>
+      </li>
+      <li>
+        <Link to={"/Profile"}>Profile</Link>
+      </li>
     </React.Fragment>
   );
   return (
@@ -49,22 +61,8 @@ const Navbar = () => {
           Hero Rider
         </Link>
       </div>
-      <div className="navbar-center hidden lg:flex">
+      <div className="navbar-end hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{MenuItems}</ul>
-      </div>
-      <div className="navbar-end">
-        <Link
-          to={"/Login"}
-          className="btn-primary px-8 py-3 font-semibold rounded  dark:text-primary-content mr-5"
-        >
-          Login
-        </Link>
-        <Link
-          to={"/Register"}
-          className="btn-primary px-8 py-3 font-semibold rounded  dark:text-primary-content"
-        >
-          Register
-        </Link>
       </div>
     </div>
   );
