@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
+import { FaSignOutAlt } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
+import { AuthContext } from "../Context/AuthProvider";
 
 const Navbar = () => {
+  const { User, LogOut } = useContext(AuthContext);
+  const HandleLogout = () => {
+    LogOut()
+      .then(() => {
+        swal({
+          title: "Logout Successful",
+          button: "OK",
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   const MenuItems = (
     <React.Fragment>
       <li>
@@ -13,18 +30,38 @@ const Navbar = () => {
       <li>
         <Link to={"/About"}>About</Link>
       </li>
-      <li>
-        <Link to={"/Login"}>Login</Link>
-      </li>
-      <li>
-        <Link to={"/RiderReg"}>Join as Rider</Link>
-      </li>
-      <li>
-        <Link to={"/LearnerReg"}>Join as Learner</Link>
-      </li>
-      <li>
-        <Link to={"/Profile"}>Profile</Link>
-      </li>
+
+      {User ? (
+        <>
+          <li>
+            <Link to={"/Profile"}>Profile</Link>
+          </li>
+          <div className="grid grid-cols-2 items-center">
+            {User?.photoURL ? (
+              <img src={User?.photoURL} className="w-10 rounded-full" alt="" />
+            ) : (
+              <FaUserCircle className="text-4xl"></FaUserCircle>
+            )}
+          </div>
+          <li>
+            <button onClick={HandleLogout}>
+              LogOut<FaSignOutAlt></FaSignOutAlt>
+            </button>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to={"/Login"}>Login</Link>
+          </li>
+          <li>
+            <Link to={"/RiderReg"}>Join as Rider</Link>
+          </li>
+          <li>
+            <Link to={"/LearnerReg"}>Join as Learner</Link>
+          </li>
+        </>
+      )}
     </React.Fragment>
   );
   return (

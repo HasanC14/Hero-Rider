@@ -5,7 +5,6 @@ import Home from "../Components/Home/Home";
 import LearnerReg from "../Components/LearnerReg/LearnerReg";
 import Login from "../Components/Login/Login";
 import Profile from "../Components/Profile/Profile";
-import Register from "../Components/Register/Register";
 import RiderReg from "../Components/RiderReg/RiderReg";
 import Main from "../Layout/Main";
 
@@ -16,7 +15,6 @@ export const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home></Home> },
       { path: "/Login", element: <Login></Login> },
-      { path: "/Register", element: <Register></Register> },
       { path: "/About", element: <About></About> },
       { path: "/RiderReg", element: <RiderReg></RiderReg> },
       { path: "/LearnerReg", element: <LearnerReg></LearnerReg> },

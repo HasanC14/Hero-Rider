@@ -1,15 +1,15 @@
 import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
-
 import RegisterImg from "../../Assets/register.png";
 import { AuthContext } from "../Context/AuthProvider";
+
 const LearnerReg = () => {
   const { Register, UpdateUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();
+  //const location = useLocation();
   const [error, setError] = useState();
-  const from = location.state?.from?.pathname || "/";
+  //const from = location.state?.from?.pathname || "/";
   const HandleForm = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -35,17 +35,45 @@ const LearnerReg = () => {
       number,
       age,
     };
+
+    Register(email, password)
+      .then(() => {
+        fetch("http://localhost:5000/addUser", {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(user),
+        })
+          .then((res) => res.json())
+          .then(() => {
+            navigate("/Profile");
+            swal({
+              icon: "success",
+              title: "Sign Up Successful",
+              button: "OK",
+            });
+          });
+        form.reset();
+
+        // navigate(from, { replace: true });
+        const profile = { displayName: Full_Name, photoURL: photoURL };
+        UpdateUser(profile).then(() => {});
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
   };
 
   return (
     <div className="max-w-screen-xl mx-auto">
-      <section className="h-screen">
-        <div className="container px-6 py-12 h-full">
-          <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
+      <section className="">
+        <div className=" md:px-6 md:py-12 p-0 h-full">
+          <div className="flex md:flex-row flex-col h-full g-6 text-gray-800">
             <div className="md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
               <img src={RegisterImg} className="w-full" alt="Phone_image" />
             </div>
-            <div className="md:w-8/12 lg:w-5/12 lg:ml-20">
+            <div className="md:w-8/12 lg:w-5/12 lg:ml-20 ml-10 mr-10 mb-10">
               <form onSubmit={HandleForm}>
                 <div className="mb-6">
                   <input
@@ -135,7 +163,7 @@ const LearnerReg = () => {
                       type="radio"
                       name="vehicle"
                       id="inlineRadio1"
-                      value="buyer"
+                      value="Car"
                       required
                     />
                     <label
@@ -151,7 +179,7 @@ const LearnerReg = () => {
                       type="radio"
                       name="vehicle"
                       id="inlineRadio2"
-                      value="seller"
+                      value="Bike"
                       required
                     />
                     <label
