@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import About from "../Components/About/About";
 import Error from "../Components/Error/Error";
 import Home from "../Components/Home/Home";
 import Login from "../Components/Login/Login";
@@ -13,6 +14,7 @@ export const router = createBrowserRouter([
       { path: "/", element: <Home></Home> },
       { path: "/Login", element: <Login></Login> },
       { path: "/Register", element: <Register></Register> },
+      { path: "/About", element: <About></About> },
     ],
   },
   {
