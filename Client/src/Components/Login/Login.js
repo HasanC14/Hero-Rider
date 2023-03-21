@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import swal from "sweetalert";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LoginImg from "../../Assets/Login.png";
+import { AuthContext } from "../Context/AuthProvider";
 const Login = () => {
-  // const { Login } = useContext(AuthContext);
+  const { Login } = useContext(AuthContext);
   const [error, setError] = useState();
   const location = useLocation();
   const navigate = useNavigate();
