@@ -62,7 +62,9 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-end hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{MenuItems}</ul>
+        <ul className="menu menu-horizontal px-1 text-lg font-semibold ">
+          {MenuItems}
+        </ul>
       </div>
     </div>
   );

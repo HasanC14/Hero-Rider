@@ -9,7 +9,7 @@ const Hero = () => {
           <h1 className="text-4xl font-bold leading-none sm:text-6xl dark:text-gray-900">
             From lessons to rides, we've got you covered with Hero Rider.
           </h1>
-          <p className="mt-6 mb-8 text-lg sm:mb-12 xl:max-w-3xl dark:text-gray-900">
+          <p className="mt-6 mb-8 md:text-lg text-sm sm:mb-12 xl:max-w-3xl dark:text-gray-900">
             At <span className="font-bold">Hero Rider</span> , we're more than
             just a ride-sharing app. We're building a community of drivers and
             riders who share our commitment to safety, reliability, and
@@ -28,7 +28,7 @@ const Hero = () => {
       <img
         src={HeroCover}
         alt="Cover_Image"
-        className="lg:w-1/2 w-full mx-auto mb-12 -mt-48 rounded-2xl lg:-mt-96"
+        className="lg:w-1/2 w-full mx-auto -mt-48 rounded-2xl lg:-mt-96"
       />
     </section>
   );

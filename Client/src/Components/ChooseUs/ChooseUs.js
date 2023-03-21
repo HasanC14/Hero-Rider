@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import pic1 from "../../Assets/pic1.png";
+import pic1 from "../../Assets/pic1.jpg";
+import pic2 from "../../Assets/pic2.jpg";
 const ChooseUs = () => {
   return (
     <div className="flex flex-col justify-center mb-10">
+      <p className="text-center md:text-7xl text-4xl mb-10 font-bold">
+        Why Choose Us?
+      </p>
       <div className="flex md:flex-row md:ml-48 md:mr-48 md:mb-28 m-5">
         <div className="w-1/2 flex justify-start">
           <img src={pic1} className="md:w-96 w-48 rounded-xl" alt="Album" />
@@ -42,7 +46,7 @@ const ChooseUs = () => {
           </div>
         </div>
         <div className="w-1/2 flex justify-end">
-          <img src={pic1} className="md:w-96 w-48 rounded-xl" alt="Album" />
+          <img src={pic2} className="md:w-96 w-48 rounded-xl" alt="Album" />
         </div>
       </div>
     </div>
