@@ -45,7 +45,7 @@ async function run() {
     // All Users with pagination
     app.get("/Users", async (req, res) => {
       const currentPage = parseInt(req.query.currentPage) || 1;
-      const perPage = 2;
+      const perPage = 10;
       const skip = (currentPage - 1) * perPage;
       const totalUsers = await UsersCollection.countDocuments();
       const totalPages = Math.ceil(totalUsers / perPage);
@@ -80,9 +80,11 @@ async function run() {
         res.send({ success: false, message: "Failed to delete user" });
       }
     });
-    //Search User
+    // //Search User
     app.get("/search/:input", async (req, res) => {
       try {
+        const currentPage = parseInt(req.query.currentPage) || 1;
+        const perPage = 10;
         const input = req.params.input;
         const query = {
           $or: [
@@ -91,13 +93,24 @@ async function run() {
             { Full_Name: { $regex: input, $options: "$i" } },
           ],
         };
-        const result = await UsersCollection.find(query).toArray();
-        res.send(result);
+        const totalUsers = await UsersCollection.countDocuments(query);
+        const totalPages = Math.ceil(totalUsers / perPage);
+        const skip = (currentPage - 1) * perPage;
+        const result = await UsersCollection.find(query)
+          .skip(skip)
+          .limit(perPage)
+          .toArray();
+        res.send({
+          users: result,
+          currentPage: currentPage,
+          totalPages: totalPages,
+        });
       } catch (error) {
         console.error(error);
         res.status(500).send({ message: "Server error" });
       }
     });
+
     //Product Payment
     app.get("/ProductPayment/:id", async (req, res) => {
       const id = req.params.id;

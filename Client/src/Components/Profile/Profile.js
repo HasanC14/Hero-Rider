@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthProvider";
 import Loading from "../Loading/Loading";
 
@@ -6,12 +6,14 @@ const Profile = () => {
   const { User } = useContext(AuthContext);
   const [info, setInfo] = useState();
   const [loading, setLoading] = useState(true);
-  fetch(`http://localhost:5000/user/${User?.email}`)
-    .then((res) => res.json())
-    .then((data) => {
-      setInfo(data);
-      setLoading(false);
-    });
+  useEffect(() => {
+    fetch(`http://localhost:5000/user/${User?.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setInfo(data);
+        setLoading(false);
+      });
+  }, [loading, User?.email]);
 
   return (
     <div className=" antialiased">

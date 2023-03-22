@@ -51,7 +51,6 @@ const Dashboard = () => {
               });
               const RemainingUser = users.filter((user) => user._id !== id);
               setUsers(RemainingUser);
-              //refetch();
             } else {
               swal({
                 title: "Delete Failed",
@@ -72,17 +71,23 @@ const Dashboard = () => {
   const handleInputChange = (event) => {
     let input = event.target.value;
     if (input) {
-      fetch(`http://localhost:5000/search/${input}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setUsers(data);
-        });
-    } else {
-      fetch("http://localhost:5000/Users")
+      fetch(`http://localhost:5000/search/${input}?currentPage=${currentPage}`)
         .then((res) => res.json())
         .then((data) => {
           setUsers(data.users);
+          setTotalPages(data.totalPages);
+          setCurrentPage(1);
         });
+    } else {
+      const fetchData = async () => {
+        const response = await fetch(
+          `http://localhost:5000/Users?currentPage=${currentPage}`
+        );
+        const data = await response.json();
+        setUsers(data.users);
+        setTotalPages(data.totalPages);
+      };
+      fetchData();
     }
   };
 
@@ -120,7 +125,7 @@ const Dashboard = () => {
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr>
+              <tr key={user?._id}>
                 <th>{user?._id}</th>
                 <td>{user?.Full_Name}</td>
                 <td>{user?.email}</td>
