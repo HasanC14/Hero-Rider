@@ -3,7 +3,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const cors = require("cors");
 require("dotenv").config();
-
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 app.use(cors());
@@ -20,6 +20,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const UsersCollection = client.db("HeroRider").collection("Users");
+    const ProductCollection = client.db("HeroRider").collection("Product");
     //Add User
     app.put("/addUser", async (req, res) => {
       const User = req.body;
@@ -45,6 +46,12 @@ async function run() {
       let query = {};
       const Users = await UsersCollection.find(query).toArray();
       res.send(Users);
+    });
+    //All Product
+    app.get("/Products", async (req, res) => {
+      let query = {};
+      const Products = await ProductCollection.find(query).toArray();
+      res.send(Products);
     });
     //Delete User
     app.delete("/user/:id", async (req, res) => {
@@ -75,6 +82,25 @@ async function run() {
         console.error(error);
         res.status(500).send({ message: "Server error" });
       }
+    });
+    //Product Payment
+    app.get("/ProductPayment/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await ProductCollection.findOne(query);
+      res.send(result);
+    });
+    app.post("/create-payment-intent", async (req, res) => {
+      const Price = req.body.Price;
+      const amount = Price * 100;
+      const paymentIntent = await stripe.paymentIntents.create({
+        currency: "usd",
+        amount: amount,
+        payment_method_types: ["card"],
+      });
+      res.send({
+        clientSecret: paymentIntent.client_secret,
+      });
     });
   } finally {
   }

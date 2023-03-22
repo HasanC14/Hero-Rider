@@ -5,6 +5,7 @@ import Error from "../Components/Error/Error";
 import Home from "../Components/Home/Home";
 import LearnerReg from "../Components/LearnerReg/LearnerReg";
 import Login from "../Components/Login/Login";
+import Payment from "../Components/Payment/Payment";
 import Profile from "../Components/Profile/Profile";
 import RiderReg from "../Components/RiderReg/RiderReg";
 import Main from "../Layout/Main";
@@ -21,6 +22,12 @@ export const router = createBrowserRouter([
       { path: "/About", element: <About></About> },
       { path: "/RiderReg", element: <RiderReg></RiderReg> },
       { path: "/LearnerReg", element: <LearnerReg></LearnerReg> },
+      {
+        path: "/ProductPayment/:id",
+        element: <Payment></Payment>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/ProductPayment/${params.id}`),
+      },
       {
         path: "/Dashboard",
         element: (
