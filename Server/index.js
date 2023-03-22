@@ -26,6 +26,20 @@ async function run() {
       const result = await UsersCollection.insertOne(User);
       res.send(result);
     });
+    //Current User
+    app.get("/user/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const user = await UsersCollection.findOne(query);
+      res.send(user);
+    });
+    //Admin Route
+    app.get("/users/admin/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const user = await UsersCollection.findOne(query);
+      res.send({ isAdmin: user?.role === "Admin" });
+    });
   } finally {
   }
 }

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FaSignOutAlt } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -7,6 +7,12 @@ import { AuthContext } from "../Context/AuthProvider";
 
 const Navbar = () => {
   const { User, LogOut } = useContext(AuthContext);
+  const [info, setInfo] = useState();
+  fetch(`http://localhost:5000/user/${User?.email}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setInfo(data);
+    });
   const HandleLogout = () => {
     LogOut()
       .then(() => {
@@ -30,7 +36,13 @@ const Navbar = () => {
       <li>
         <Link to={"/About"}>About</Link>
       </li>
-
+      {User && info?.role === "Admin" ? (
+        <li>
+          <Link to={"/Dashboard"}>Dashboard</Link>
+        </li>
+      ) : (
+        ""
+      )}
       {User ? (
         <>
           <li>
