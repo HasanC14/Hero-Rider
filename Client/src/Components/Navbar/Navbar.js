@@ -46,15 +46,20 @@ const Navbar = () => {
       {User ? (
         <>
           <li>
-            <Link to={"/Profile"}>Profile</Link>
+            <Link to={"/Profile"}>
+              Profile{" "}
+              {User?.photoURL ? (
+                <img
+                  src={User?.photoURL}
+                  className="w-10 rounded-full"
+                  alt=""
+                />
+              ) : (
+                <FaUserCircle className="text-4xl"></FaUserCircle>
+              )}
+            </Link>
           </li>
-          <div className="grid grid-cols-2 items-center">
-            {User?.photoURL ? (
-              <img src={User?.photoURL} className="w-10 rounded-full" alt="" />
-            ) : (
-              <FaUserCircle className="text-4xl"></FaUserCircle>
-            )}
-          </div>
+
           <li>
             <button onClick={HandleLogout}>
               LogOut<FaSignOutAlt></FaSignOutAlt>

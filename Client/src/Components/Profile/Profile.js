@@ -1,14 +1,18 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthProvider";
+import Loading from "../Loading/Loading";
 
 const Profile = () => {
   const { User } = useContext(AuthContext);
   const [info, setInfo] = useState();
+  const [loading, setLoading] = useState(true);
   fetch(`http://localhost:5000/user/${User?.email}`)
     .then((res) => res.json())
     .then((data) => {
       setInfo(data);
+      setLoading(false);
     });
+
   return (
     <div className=" antialiased">
       <div className="container mx-auto my-60">
@@ -21,13 +25,15 @@ const Profile = () => {
                 className="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-xl-md border-4 border-white transition duration-200 transform hover:scale-110"
               />
             </div>
-
             <div className="mt-16">
               <h1 className="font-bold text-center text-3xl text-gray-900">
                 {User?.displayName}{" "}
                 <span className="text-sm">({info?.role})</span>
               </h1>
-
+            </div>
+            {loading ? (
+              <Loading></Loading>
+            ) : (
               <div className="w-full mt-5 grid md:grid-cols-2 grid-cols-1 gap-6">
                 <h3 className="text-xl text-gray-900 md:text-left  text-center px-6">
                   Email: {info?.email}
@@ -42,7 +48,7 @@ const Profile = () => {
                   Current Address: {info?.address}
                 </h3>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

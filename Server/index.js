@@ -40,6 +40,42 @@ async function run() {
       const user = await UsersCollection.findOne(query);
       res.send({ isAdmin: user?.role === "Admin" });
     });
+    //All Users
+    app.get("/Users", async (req, res) => {
+      let query = {};
+      const Users = await UsersCollection.find(query).toArray();
+      res.send(Users);
+    });
+    //Delete User
+    app.delete("/user/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await UsersCollection.deleteOne(query);
+
+      if (result.deletedCount === 1) {
+        res.send({ success: true, message: "User deleted successfully" });
+      } else {
+        res.send({ success: false, message: "Failed to delete user" });
+      }
+    });
+    //Search User
+    app.get("/search/:input", async (req, res) => {
+      try {
+        const input = req.params.input;
+        const query = {
+          $or: [
+            { email: { $regex: input, $options: "$i" } },
+            { number: { $regex: input, $options: "$i" } },
+            { Full_Name: { $regex: input, $options: "$i" } },
+          ],
+        };
+        const result = await UsersCollection.find(query).toArray();
+        res.send(result);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Server error" });
+      }
+    });
   } finally {
   }
 }
