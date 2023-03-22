@@ -6,6 +6,7 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [selectedUsers, setSelectedUsers] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +29,25 @@ const Dashboard = () => {
   const handleNextPageClick = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+    }
+  };
+  const selectAllUsers = (event) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      const allUserIds = users.map((user) => user._id);
+      setSelectedUsers(allUserIds);
+    } else {
+      setSelectedUsers([]);
+    }
+  };
+
+  const handleUserSelection = (event, userId) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setSelectedUsers([...selectedUsers, userId]);
+    } else {
+      const remainingUsers = selectedUsers.filter((id) => id !== userId);
+      setSelectedUsers(remainingUsers);
     }
   };
 
@@ -116,6 +136,9 @@ const Dashboard = () => {
         <table className="table w-full ">
           <thead>
             <tr>
+              <th>
+                <input type="checkbox" onChange={selectAllUsers} />
+              </th>
               <th>User ID</th>
               <th>Full Name</th>
               <th>User Email</th>
@@ -124,9 +147,22 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
+            {users.length === 0 ? (
+              <p className="text-center text-6xl m-10">Sorry No User Found</p>
+            ) : (
+              ""
+            )}
             {users.map((user) => (
               <tr key={user?._id}>
-                <th>{user?._id}</th>
+                <td>
+                  <input
+                    type="checkbox"
+                    value={user._id}
+                    checked={selectedUsers.includes(user._id)}
+                    onChange={(event) => handleUserSelection(event, user._id)}
+                  />
+                </td>
+                <td>{user?._id}</td>
                 <td>{user?.Full_Name}</td>
                 <td>{user?.email}</td>
                 <td>{user?.number}</td>

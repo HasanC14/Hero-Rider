@@ -80,7 +80,7 @@ async function run() {
         res.send({ success: false, message: "Failed to delete user" });
       }
     });
-    // //Search User
+    //Search User
     app.get("/search/:input", async (req, res) => {
       try {
         const currentPage = parseInt(req.query.currentPage) || 1;
