@@ -41,12 +41,27 @@ async function run() {
       const user = await UsersCollection.findOne(query);
       res.send({ isAdmin: user?.role === "Admin" });
     });
-    //All Users
+
+    // All Users with pagination
     app.get("/Users", async (req, res) => {
-      let query = {};
-      const Users = await UsersCollection.find(query).toArray();
-      res.send(Users);
+      const currentPage = parseInt(req.query.currentPage) || 1;
+      const perPage = 2;
+      const skip = (currentPage - 1) * perPage;
+      const totalUsers = await UsersCollection.countDocuments();
+      const totalPages = Math.ceil(totalUsers / perPage);
+
+      const Users = await UsersCollection.find()
+        .skip(skip)
+        .limit(perPage)
+        .toArray();
+
+      res.send({
+        users: Users,
+        currentPage: currentPage,
+        totalPages: totalPages,
+      });
     });
+
     //All Product
     app.get("/Products", async (req, res) => {
       let query = {};

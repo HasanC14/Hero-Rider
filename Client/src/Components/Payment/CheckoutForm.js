@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { AuthContext } from "../Context/AuthProvider";
-
+import "./CheckoutForm.css";
 const CheckoutForm = ({ Payment }) => {
   const { User } = useContext(AuthContext);
   const { Price } = Payment;
@@ -90,22 +90,7 @@ const CheckoutForm = ({ Payment }) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: "16px",
-                color: "#424770",
-                "::placeholder": {
-                  color: "#aab7c4",
-                },
-              },
-              invalid: {
-                color: "#9e2146",
-              },
-            },
-          }}
-        />
+        <CardElement className="CardElement" />
         <button type="submit" disabled={!stripe || !clientSecret}>
           Pay
         </button>

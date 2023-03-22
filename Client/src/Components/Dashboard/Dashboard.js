@@ -4,14 +4,32 @@ import swal from "sweetalert";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:5000/Users")
-      .then((res) => res.json())
-      .then((data) => {
-        setUsers(data);
-      });
-  }, []);
+    const fetchData = async () => {
+      const response = await fetch(
+        `http://localhost:5000/Users?currentPage=${currentPage}`
+      );
+      const data = await response.json();
+      setUsers(data.users);
+      setTotalPages(data.totalPages);
+    };
+    fetchData();
+  }, [currentPage]);
+
+  const handlePrevPageClick = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPageClick = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   const HandleDelete = (id) => {
     swal({
@@ -63,7 +81,7 @@ const Dashboard = () => {
       fetch("http://localhost:5000/Users")
         .then((res) => res.json())
         .then((data) => {
-          setUsers(data);
+          setUsers(data.users);
         });
     }
   };
@@ -125,6 +143,17 @@ const Dashboard = () => {
             ))}
           </tbody>
         </table>
+        <div>
+          <div className="btn-group">
+            <button className="btn btn-primary" onClick={handlePrevPageClick}>
+              «
+            </button>
+            <button className="btn btn-primary">{`Page ${currentPage} of ${totalPages}`}</button>
+            <button className="btn btn-primary" onClick={handleNextPageClick}>
+              »
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
