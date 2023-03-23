@@ -7,7 +7,7 @@ const Profile = () => {
   const [info, setInfo] = useState();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetch(`http://localhost:5000/user/${User?.email}`)
+    fetch(`https://hero-rider-server-ashy.vercel.app/user/${User?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setInfo(data);

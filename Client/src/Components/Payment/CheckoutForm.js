@@ -16,7 +16,7 @@ const CheckoutForm = ({ Payment }) => {
   const date = dateObj.substring(0, 16);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("http://localhost:5000/create-payment-intent", {
+    fetch("https://hero-rider-server-ashy.vercel.app/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ Price }),
@@ -71,7 +71,7 @@ const CheckoutForm = ({ Payment }) => {
       //     date,
       //   };
       //   //Payment Collection
-      //   fetch("http://localhost:5000/addPayment", {
+      //   fetch("https://hero-rider-server-ashy.vercel.app/addPayment", {
       //     method: "POST",
       //     headers: {
       //       "content-type": "application/json",

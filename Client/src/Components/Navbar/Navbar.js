@@ -8,7 +8,7 @@ import { AuthContext } from "../Context/AuthProvider";
 const Navbar = () => {
   const { User, LogOut } = useContext(AuthContext);
   const [info, setInfo] = useState();
-  fetch(`http://localhost:5000/user/${User?.email}`)
+  fetch(`https://hero-rider-server-ashy.vercel.app/user/${User?.email}`)
     .then((res) => res.json())
     .then((data) => {
       setInfo(data);

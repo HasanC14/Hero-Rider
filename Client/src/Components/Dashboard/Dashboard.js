@@ -11,7 +11,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `http://localhost:5000/Users?currentPage=${currentPage}`
+        `https://hero-rider-server-ashy.vercel.app/Users?currentPage=${currentPage}`
       );
       const data = await response.json();
       setUsers(data.users);
@@ -59,7 +59,7 @@ const Dashboard = () => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        fetch(`http://localhost:5000/user/${id}`, {
+        fetch(`https://hero-rider-server-ashy.vercel.app/user/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -91,7 +91,9 @@ const Dashboard = () => {
   const handleInputChange = (event) => {
     let input = event.target.value;
     if (input) {
-      fetch(`http://localhost:5000/search/${input}?currentPage=${currentPage}`)
+      fetch(
+        `https://hero-rider-server-ashy.vercel.app/search/${input}?currentPage=${currentPage}`
+      )
         .then((res) => res.json())
         .then((data) => {
           setUsers(data.users);
@@ -101,7 +103,7 @@ const Dashboard = () => {
     } else {
       const fetchData = async () => {
         const response = await fetch(
-          `http://localhost:5000/Users?currentPage=${currentPage}`
+          `https://hero-rider-server-ashy.vercel.app/Users?currentPage=${currentPage}`
         );
         const data = await response.json();
         setUsers(data.users);

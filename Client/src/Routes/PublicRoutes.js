@@ -24,9 +24,15 @@ export const router = createBrowserRouter([
       { path: "/LearnerReg", element: <LearnerReg></LearnerReg> },
       {
         path: "/ProductPayment/:id",
-        element: <Payment></Payment>,
+        element: (
+          <PrivateRoute>
+            <Payment></Payment>
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/ProductPayment/${params.id}`),
+          fetch(
+            `https://hero-rider-server-ashy.vercel.app/ProductPayment/${params.id}`
+          ),
       },
       {
         path: "/Dashboard",

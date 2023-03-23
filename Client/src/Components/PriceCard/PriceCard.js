@@ -4,7 +4,7 @@ import "./PriceCard.css";
 
 const PriceCard = () => {
   const [Products, setProducts] = useState([]);
-  fetch("http://localhost:5000/Products")
+  fetch("https://hero-rider-server-ashy.vercel.app/Products")
     .then((res) => res.json())
     .then((data) => {
       setProducts(data);

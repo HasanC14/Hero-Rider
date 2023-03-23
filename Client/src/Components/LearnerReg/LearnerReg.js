@@ -38,7 +38,7 @@ const LearnerReg = () => {
 
     Register(email, password)
       .then(() => {
-        fetch("http://localhost:5000/addUser", {
+        fetch("https://hero-rider-server-ashy.vercel.app/addUser", {
           method: "PUT",
           headers: {
             "content-type": "application/json",
@@ -200,7 +200,7 @@ const LearnerReg = () => {
                   type="submit"
                   className="inline-block px-7 py-3 bg-primary text-white font-medium text-sm  uppercase rounded shadow-md hover:bg-primary-focus hover:shadow-lg focus:bg-primary-focus focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary active:shadow-lg w-full"
                 >
-                  Register
+                  Join as a Learner
                 </button>
                 <p className="text-red-600 text-center text-xl">{error}</p>
               </form>
