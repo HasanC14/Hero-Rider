@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaSignOutAlt } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -8,11 +8,14 @@ import { AuthContext } from "../Context/AuthProvider";
 const Navbar = () => {
   const { User, LogOut } = useContext(AuthContext);
   const [info, setInfo] = useState();
-  fetch(`https://hero-rider-server-ashy.vercel.app/user/${User?.email}`)
-    .then((res) => res.json())
-    .then((data) => {
-      setInfo(data);
-    });
+  useEffect(() => {
+    fetch(`https://hero-rider-server-ashy.vercel.app/user/${User?.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setInfo(data);
+      });
+  }, [User?.email]);
+
   const HandleLogout = () => {
     LogOut()
       .then(() => {
@@ -29,9 +32,6 @@ const Navbar = () => {
     <React.Fragment>
       <li>
         <Link to={"/"}>Home</Link>
-      </li>
-      <li>
-        <Link to={"/Blog"}>Blog</Link>
       </li>
       <li>
         <Link to={"/About"}>About</Link>

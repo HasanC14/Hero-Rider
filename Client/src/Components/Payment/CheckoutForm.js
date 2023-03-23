@@ -52,7 +52,6 @@ const CheckoutForm = ({ Payment }) => {
           },
         },
       });
-    console.log(paymentIntent.id);
     if (ConfirmError) {
       setCardError(ConfirmError.message);
 

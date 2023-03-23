@@ -16,7 +16,6 @@ const Login = () => {
     const password = form.password.value;
     Login(email, password)
       .then((data) => {
-        console.log(data);
         navigate(from, { replace: true });
         swal({
           title: `Welcome ${data?.user.displayName}`,

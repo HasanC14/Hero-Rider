@@ -150,7 +150,7 @@ const Dashboard = () => {
           </thead>
           <tbody>
             {users.length === 0 ? (
-              <p className="text-center text-6xl m-10">Sorry No User Found</p>
+              <th className="text-center text-6xl m-10">Sorry No User Found</th>
             ) : (
               ""
             )}

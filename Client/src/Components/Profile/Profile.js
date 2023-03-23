@@ -34,7 +34,9 @@ const Profile = () => {
               </h1>
             </div>
             {loading ? (
-              <Loading></Loading>
+              <div className="flex justify-center mt-10">
+                <div className="w-6 h-6 border-4 border-dashed rounded-full animate-spin dark:border-gray-900"></div>
+              </div>
             ) : (
               <div className="w-full mt-5 grid md:grid-cols-2 grid-cols-1 gap-6">
                 <h3 className="text-xl text-gray-900 md:text-left  text-center px-6">

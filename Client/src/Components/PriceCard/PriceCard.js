@@ -52,7 +52,6 @@ const PriceCard = () => {
                       (based on {product.RatingsCount} ratings)
                     </span>
                   </div>
-                  {console.log(product?._id)}
                   <Link to={`/ProductPayment/${product?._id}`}>
                     <button className="btn btn-sm mt-2 w-full">Buy Now</button>
                   </Link>

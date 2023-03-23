@@ -7,9 +7,17 @@ import { AuthContext } from "../Context/AuthProvider";
 const RiderReg = () => {
   const { Register, UpdateUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  //const location = useLocation();
   const [error, setError] = useState();
-  //const from = location.state?.from?.pathname || "/";
+  const [C_Pass, setC_Pass] = useState("");
+  const [Pass, setPass] = useState("");
+  const handleInputChangeC = (event) => {
+    let input = event.target.value;
+    setC_Pass(input);
+  };
+  const handleInputChangeP = (event) => {
+    let input = event.target.value;
+    setPass(input);
+  };
   const HandleForm = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -197,24 +205,30 @@ const RiderReg = () => {
                     required
                   />
                 </div>
-                <div className="mb-6">
+                <div className="mb-6 col-span-2">
                   <input
                     type="password"
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                     placeholder="Password"
                     name="password"
+                    onChange={handleInputChangeP}
                     required
                   />
                 </div>
-                <div className="mb-6">
+                <div className="mb-6 col-span-2">
                   <input
                     type="password"
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                     placeholder="Confirm Password"
                     name="confirm_password"
+                    onChange={handleInputChangeC}
                     required
                   />
                 </div>
+                <div className="text-right col-span-2">
+                  {Pass === C_Pass ? "✔️" : "❌"}
+                </div>
+
                 <div className="flex justify-start mb-3">
                   <div className="form-check form-check-inline">
                     <input
@@ -255,12 +269,17 @@ const RiderReg = () => {
                     Login
                   </Link>
                 </div>
+
                 <button
                   type="submit"
-                  className="inline-block px-7 py-3 bg-primary text-white font-medium text-sm  uppercase rounded shadow-md hover:bg-primary-focus hover:shadow-lg focus:bg-primary-focus focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary active:shadow-lg w-full"
+                  className={`inline-block px-7 py-3 bg-primary text-white font-medium text-sm uppercase rounded shadow-md hover:bg-primary-focus hover:shadow-lg focus:bg-primary-focus focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary active:shadow-lg w-full ${
+                    Pass !== C_Pass ? "bg-gray-400 cursor-not-allowed" : ""
+                  }`}
+                  disabled={Pass !== C_Pass}
                 >
                   Join as a Rider
                 </button>
+
                 <p className="text-red-600 text-center text-xl">{error}</p>
               </form>
             </div>
